@@ -1,0 +1,141 @@
+import { useState } from 'react'
+import React from 'react'
+import { auth } from '../Firebase' // make sure the path is correct
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+
+const Login = () => {
+    const [isLoginMode, setIsLoginMode] = useState(true)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setError('')
+        setLoading(true)
+
+        try {
+            if (isLoginMode) {
+                // Login logic
+                await signInWithEmailAndPassword(auth, email, password)
+                alert("Logged in successfully!")
+            } else {
+                // Signup logic
+                if (password !== confirmPassword) {
+                    setError("Passwords do not match.")
+                    return
+                }
+                await createUserWithEmailAndPassword(auth, email, password)
+                alert("Account created!")
+            }
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return (
+        <div className='w-[430px] bg-white p-8 rounded-2xl shadow-lg'>
+            <div className='flex justify-center mb-4'>
+                <h2 className='text-3xl font-semibold text-center'>{isLoginMode ? "Login" : "Sign Up"}</h2>
+            </div>
+
+            <div className='relative flex h-12 mb-6 border border-gray-300 rounded-full overflow-hidden'>
+                <button
+                    className={`w-1/2 text-lg font-medium transition-all z-10 ${isLoginMode ? "text-white" : "text-black"}`}
+                    onClick={() => setIsLoginMode(true)}
+                >
+                    Login
+                </button>
+                <button
+                    className={`w-1/2 text-lg font-medium transition-all z-10 ${!isLoginMode ? "text-white" : "text-black"}`}
+                    onClick={() => setIsLoginMode(false)}
+                >
+                    Signup
+                </button>
+                <div
+                    className={`absolute top-0 h-full w-1/2 rounded-full bg-gradient-to-r from-blue-700 via-cyan-600 to-cyan-200 transition-all ${isLoginMode ? "left-0" : "left-1/2"}`}
+                ></div>
+            </div>
+
+            <form className='space-y-4' onSubmit={handleSubmit}>
+                {!isLoginMode && (
+                    <input
+                        type="text"
+                        placeholder='Name'
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className='w-full p-3 border-b-2 border-gray-300 outline-none focus:border-cyan-500 placeholder-gray-400'
+                    />
+                )}
+
+                <input
+                    type="email"
+                    placeholder='Email Address'
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className='w-full p-3 border-b-2 border-gray-300 outline-none focus:border-cyan-500 placeholder-gray-400'
+                />
+
+                <input
+                    type="password"
+                    placeholder='Password'
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className='w-full p-3 border-b-2 border-gray-300 outline-none focus:border-cyan-500 placeholder-gray-400'
+                />
+
+                {!isLoginMode && (
+                    <input
+                        type="password"
+                        placeholder='Confirm Password'
+                        required
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className='w-full p-3 border-b-2 border-gray-300 outline-none focus:border-cyan-500 placeholder-gray-400'
+                    />
+                )}
+
+                {isLoginMode && (
+                    <div className='text-right'>
+                        <p className='text-cyan-600 hover:underline'>Forget Password</p>
+                    </div>
+                )}
+
+                {error && (
+                    <p className="text-red-500 text-sm text-center">{error}</p>
+                )}
+
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className='w-full p-3 bg-gradient-to-r from-blue-700 via-cyan-600 to-cyan-200 text-white rounded-full text-lg font-medium hover:opacity-90 transition'>
+                    {loading ? "Please wait..." : isLoginMode ? "Login" : "Sign Up"}
+                </button>
+
+                <p className='text-center text-gray-600 '>
+                    {isLoginMode ? "Don't have an account?" : "Already have an account?"}{" "}
+                    <a
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setIsLoginMode(!isLoginMode);
+                        }}
+                        className="text-cyan-600 hover:underline"
+                    >
+                        {isLoginMode ? "Signup now" : "Login"}
+                    </a>
+                </p>
+            </form>
+        </div>
+    )
+}
+
+export default Login
