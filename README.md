@@ -1,12 +1,11 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🔐 React Firebase Authentication UI 🚀
+Just built a Login & Signup UI using ReactJS + Tailwind CSS, fully integrated with Firebase Authentication! 💻🔥
+✅ Toggle between Login & Signup
+ ✅ Password confirmation for new users
+ ✅ Forget password link
+ ✅ Firebase integration for real user auth
+ ✅ Responsive & smooth tab switch with animated background
+This project helped me understand the real-world implementation of Firebase Auth with modern UI practices.
+ Looking forward to learning more and building smarter!
+🔗 Live on Netlify: https://lnkd.in/dhcD5yAh
+ 💻 GitHub: https://lnkd.in/dGMHSb8W
